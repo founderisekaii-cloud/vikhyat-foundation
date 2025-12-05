@@ -159,9 +159,20 @@ include 'header.php';
                     <div class="text-4xl font-bold text-brand-600 mb-4">₹1,000<span
                             class="text-base font-normal text-gray-500">/mo</span></div>
                     <p class="text-gray-600 mb-6">Provide books, uniform, and tuition for one underprivileged child.</p>
-                    <button onclick="openRazorpay(1000, 'Educate a Child')"
-                        class="w-full bg-brand-600 text-white font-bold py-3 rounded-lg hover:bg-brand-700 transition-colors">Donate
-                        Now</button>
+                    <div class="flex gap-3">
+                        <button onclick="openRazorpay(1000, 'Educate a Child')"
+                            class="flex-1 bg-brand-600 text-white font-bold py-3 rounded-lg hover:bg-brand-700 transition-colors shadow-md">Donate
+                            Now</button>
+                        <button onclick="shareProject('Educate a Child', 'Help us educate a child! Donate here: https://vikhyatfoundation.com/get-involved.php')"
+                            class="bg-gray-100 text-brand-600 p-3 rounded-lg hover:bg-brand-50 hover:text-brand-700 transition-colors border border-gray-200 shadow-sm"
+                            title="Share this Cause">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z">
+                                </path>
+                            </svg>
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -180,9 +191,20 @@ include 'header.php';
                     <div class="text-4xl font-bold text-brand-600 mb-4">₹5,000<span
                             class="text-base font-normal text-gray-500">/mo</span></div>
                     <p class="text-gray-600 mb-6">Support the educational needs of an entire classroom for a month.</p>
-                    <button onclick="openRazorpay(5000, 'Sponsor a Class')"
-                        class="w-full bg-brand-600 text-white font-bold py-3 rounded-lg hover:bg-brand-700 transition-colors">Donate
-                        Now</button>
+                    <div class="flex gap-3">
+                        <button onclick="openRazorpay(5000, 'Sponsor a Class')"
+                            class="flex-1 bg-brand-600 text-white font-bold py-3 rounded-lg hover:bg-brand-700 transition-colors shadow-md">Donate
+                            Now</button>
+                        <button onclick="shareProject('Sponsor a Class', 'Support a classroom! Donate here: https://vikhyatfoundation.com/get-involved.php')"
+                            class="bg-gray-100 text-brand-600 p-3 rounded-lg hover:bg-brand-50 hover:text-brand-700 transition-colors border border-gray-200 shadow-sm"
+                            title="Share this Cause">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z">
+                                </path>
+                            </svg>
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -199,9 +221,20 @@ include 'header.php';
                     <div class="text-4xl font-bold text-brand-600 mb-4">₹10,000<span
                             class="text-base font-normal text-gray-500">/camp</span></div>
                     <p class="text-gray-600 mb-6">Fund a medical camp to provide free checkups and medicine.</p>
-                    <button onclick="openRazorpay(10000, 'Health Camp')"
-                        class="w-full bg-brand-600 text-white font-bold py-3 rounded-lg hover:bg-brand-700 transition-colors">Donate
-                        Now</button>
+                    <div class="flex gap-3">
+                        <button onclick="openRazorpay(10000, 'Health Camp')"
+                            class="flex-1 bg-brand-600 text-white font-bold py-3 rounded-lg hover:bg-brand-700 transition-colors shadow-md">Donate
+                            Now</button>
+                        <button onclick="shareProject('Health Camp', 'Fund a medical camp! Donate here: https://vikhyatfoundation.com/get-involved.php')"
+                            class="bg-gray-100 text-brand-600 p-3 rounded-lg hover:bg-brand-50 hover:text-brand-700 transition-colors border border-gray-200 shadow-sm"
+                            title="Share this Cause">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z">
+                                </path>
+                            </svg>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -226,10 +259,21 @@ include 'header.php';
                     <input type="email" id="donor-email" name="email" required placeholder="Your Email"
                         class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-500 focus:border-transparent outline-none transition-all">
                 </div>
-                <button type="submit"
-                    class="w-full bg-gray-900 text-white font-bold py-3 rounded-lg hover:bg-gray-800 transition-colors">
-                    Proceed to Pay
-                </button>
+                <div class="flex gap-3">
+                    <button type="submit"
+                        class="flex-1 bg-gray-900 text-white font-bold py-3 rounded-lg hover:bg-gray-800 transition-colors shadow-md">
+                        Proceed to Pay
+                    </button>
+                    <button type="button" onclick="shareProject('Donate to Vikhyat Foundation', 'Support our mission! Donate here: https://vikhyatfoundation.com/get-involved.php')"
+                        class="bg-gray-100 text-gray-900 p-3 rounded-lg hover:bg-gray-200 transition-colors border border-gray-200 shadow-sm"
+                        title="Share this Cause">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z">
+                            </path>
+                        </svg>
+                    </button>
+                </div>
             </form>
         </div>
     </div>
@@ -410,6 +454,35 @@ include 'header.php';
         }
 
         openRazorpay(amount, 'Custom Donation', name, email);
+    }
+
+    // Share Functionality
+    async function shareProject(title, text) {
+        const url = 'https://vikhyatfoundation.com/get-involved.php'; 
+        
+        if (navigator.share) {
+            try {
+                await navigator.share({
+                    title: title,
+                    text: text,
+                    url: url
+                });
+                showToast('Sharing opened!');
+            } catch (err) {
+                console.log('Error sharing:', err);
+                if (err.name !== 'AbortError') showToast('Could not share.', 'error');
+            }
+        } else {
+            // Fallback: Copy to clipboard
+            try {
+                const shareText = text; // Just copy the text which contains the link
+                await navigator.clipboard.writeText(shareText);
+                showToast('Link copied to clipboard!');
+            } catch (err) {
+                console.error('Clipboard error:', err);
+                showToast('Share manually: ' + url);
+            }
+        }
     }
 </script>
 
