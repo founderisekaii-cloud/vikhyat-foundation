@@ -163,7 +163,8 @@ include 'header.php';
                         <button onclick="openRazorpay(1000, 'Educate a Child')"
                             class="flex-1 bg-brand-600 text-white font-bold py-3 rounded-lg hover:bg-brand-700 transition-colors shadow-md">Donate
                             Now</button>
-                        <button onclick="shareProject('Educate a Child', 'Help us educate a child! Donate here: https://vikhyatfoundation.com/get-involved.php')"
+                        <button
+                            onclick="shareProject('Educate a Child', 'Help us educate a child! Donate here: https://vikhyatfoundation.com/get-involved.php')"
                             class="bg-gray-100 text-brand-600 p-3 rounded-lg hover:bg-brand-50 hover:text-brand-700 transition-colors border border-gray-200 shadow-sm"
                             title="Share this Cause">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -195,7 +196,8 @@ include 'header.php';
                         <button onclick="openRazorpay(5000, 'Sponsor a Class')"
                             class="flex-1 bg-brand-600 text-white font-bold py-3 rounded-lg hover:bg-brand-700 transition-colors shadow-md">Donate
                             Now</button>
-                        <button onclick="shareProject('Sponsor a Class', 'Support a classroom! Donate here: https://vikhyatfoundation.com/get-involved.php')"
+                        <button
+                            onclick="shareProject('Sponsor a Class', 'Support a classroom! Donate here: https://vikhyatfoundation.com/get-involved.php')"
                             class="bg-gray-100 text-brand-600 p-3 rounded-lg hover:bg-brand-50 hover:text-brand-700 transition-colors border border-gray-200 shadow-sm"
                             title="Share this Cause">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -225,7 +227,8 @@ include 'header.php';
                         <button onclick="openRazorpay(10000, 'Health Camp')"
                             class="flex-1 bg-brand-600 text-white font-bold py-3 rounded-lg hover:bg-brand-700 transition-colors shadow-md">Donate
                             Now</button>
-                        <button onclick="shareProject('Health Camp', 'Fund a medical camp! Donate here: https://vikhyatfoundation.com/get-involved.php')"
+                        <button
+                            onclick="shareProject('Health Camp', 'Fund a medical camp! Donate here: https://vikhyatfoundation.com/get-involved.php')"
                             class="bg-gray-100 text-brand-600 p-3 rounded-lg hover:bg-brand-50 hover:text-brand-700 transition-colors border border-gray-200 shadow-sm"
                             title="Share this Cause">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -264,7 +267,8 @@ include 'header.php';
                         class="flex-1 bg-gray-900 text-white font-bold py-3 rounded-lg hover:bg-gray-800 transition-colors shadow-md">
                         Proceed to Pay
                     </button>
-                    <button type="button" onclick="shareProject('Donate to Vikhyat Foundation', 'Support our mission! Donate here: https://vikhyatfoundation.com/get-involved.php')"
+                    <button type="button"
+                        onclick="shareProject('Donate to Vikhyat Foundation', 'Support our mission! Donate here: https://vikhyatfoundation.com/get-involved.php')"
                         class="bg-gray-100 text-gray-900 p-3 rounded-lg hover:bg-gray-200 transition-colors border border-gray-200 shadow-sm"
                         title="Share this Cause">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -379,7 +383,7 @@ include 'header.php';
         })
             .then(response => response.json())
             .then(data => {
-                if (data.success) {
+                if (data.status === 'success' || data.success) {
                     showToast(data.message || 'Inquiry sent successfully!');
                     form.reset();
                     toggleFields(); // Reset fields visibility
@@ -393,7 +397,38 @@ include 'header.php';
             });
     }
 
-    function openRazorpay(amount, description, prefillName = '', prefillEmail = '') {
+    async function createOrder(amount) {
+        try {
+            const formData = new FormData();
+            formData.append('amount', amount);
+
+            const response = await fetch('api/create-order.php', {
+                method: 'POST',
+                body: formData
+            });
+
+            const data = await response.json();
+
+            if (data.status === 'success') {
+                return data.order_id;
+            } else {
+                console.error('Order creation failed:', data);
+                showToast('Failed to initialize payment. Please try again.', 'error');
+                return null;
+            }
+        } catch (error) {
+            console.error('Error creating order:', error);
+            showToast('Network error. Please try again.', 'error');
+            return null;
+        }
+    }
+
+    async function openRazorpay(amount, description, prefillName = '', prefillEmail = '') {
+        showToast('Initializing secure payment...', 'success');
+
+        const order_id = await createOrder(amount);
+        if (!order_id) return;
+
         var options = {
             "key": "<?php echo RAZORPAY_KEY_ID; ?>",
             "amount": amount * 100,
@@ -401,13 +436,18 @@ include 'header.php';
             "name": "Vikhyat Foundation",
             "description": description,
             "image": "images/logo.png",
+            "order_id": order_id, // Pass Server Order ID
             "handler": function (response) {
                 // Send verification request to server
                 const formData = new FormData();
                 formData.append('razorpay_payment_id', response.razorpay_payment_id);
+                formData.append('razorpay_order_id', response.razorpay_order_id);
+                formData.append('razorpay_signature', response.razorpay_signature);
                 formData.append('amount', amount);
                 formData.append('name', prefillName || 'Donor');
                 formData.append('email', prefillEmail);
+
+                showToast('Verifying payment...', 'success');
 
                 fetch('api/verify-payment.php', {
                     method: 'POST',
@@ -416,14 +456,14 @@ include 'header.php';
                     .then(res => res.json())
                     .then(data => {
                         if (data.success) {
-                            showToast("Payment Successful! Receipt sent to your email.");
+                            showToast(data.message || "Payment Successful! Receipt sent.");
                         } else {
-                            showToast("Payment Successful, but receipt failed: " + (data.message || 'Unknown error'), 'error');
+                            showToast("Payment Successful but Verification Failed: " + (data.message || 'Unknown error'), 'error');
                         }
                     })
                     .catch(err => {
                         console.error('Error:', err);
-                        showToast("Payment Successful! (Verification failed)", 'error');
+                        showToast("Payment Verified but Network Error occurred.", 'error');
                     });
             },
             "prefill": {
@@ -458,8 +498,8 @@ include 'header.php';
 
     // Share Functionality
     async function shareProject(title, text) {
-        const url = 'https://vikhyatfoundation.com/get-involved.php'; 
-        
+        const url = 'https://vikhyatfoundation.com/get-involved.php';
+
         if (navigator.share) {
             try {
                 await navigator.share({
